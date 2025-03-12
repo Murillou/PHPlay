@@ -55,7 +55,7 @@
           <h3><?= $video['title'] ?></h3>
           <div class="acoes-video">
             <a href="./pages/send-video.php">Editar</a>
-            <a href="./pages/send-video.php">Excluir</a>
+            <a href="./pages/delete-video.php?id=<?= $video['id']; ?>">Excluir</a>
           </div>
         </div>
       </li>
