@@ -1,3 +1,11 @@
+<?php
+  require './config/connection-bd.php';
+
+  $stmt = $pdo->query('SELECT * FROM videos;');
+  $dataVideos = $stmt->fetchAll();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -21,20 +29,21 @@
         <h1>PHPlay</h1>
 
         <div class="header__icons">
-          <a href="./pages/send-video.html" class="header__videos"
+          <a href="./pages/send-video.php" class="header__videos"
             >Enviar vídeo</a
           >
-          <a href="./pages/login.html" class="header__sair">Sair</a>
+          <a href="./pages/login.php" class="header__sair">Sair</a>
         </div>
       </nav>
     </header>
 
     <ul class="videos__container" alt="Vídeos PHP">
+      <?php foreach($dataVideos as $video) :?>
       <li class="videos__item">
         <iframe
           width="100%"
           height="75%"
-          src="https://www.youtube.com/embed/MaDrzr4fAcE?si=m9UC_tLn7QrbPKI_"
+          src="<?= $video['url'] ?>"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -43,73 +52,14 @@
         ></iframe>
         <div class="video-description">
           <img src="./img/logo.png" alt="logo canal alura" />
-          <h3>O futuro do PHP em 2024: Vale a pena aprender?</h3>
+          <h3><?= $video['title'] ?></h3>
           <div class="acoes-video">
-            <a href="./pages/send-video.html">Editar</a>
-            <a href="./pages/send-video.html">Excluir</a>
+            <a href="./pages/send-video.php">Editar</a>
+            <a href="./pages/send-video.php">Excluir</a>
           </div>
         </div>
       </li>
-      <li class="videos__item">
-        <iframe
-          width="100%"
-          height="75%"
-          src="https://www.youtube.com/embed/NhUFUfzZowM?si=xcMqvJWUevLLDmY9"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-        <div class="video-description">
-          <img src="./img/logo.png" alt="logo canal alura" />
-          <h3>APRENDA PHP EM 10 MINUTOS</h3>
-          <div class="acoes-video">
-            <a href="./pages/send-video.html">Editar</a>
-            <a href="./pages/send-video.html">Excluir</a>
-          </div>
-        </div>
-      </li>
-      <li class="videos__item">
-        <iframe
-          width="100%"
-          height="75%"
-          src="https://www.youtube.com/embed/6vEspHqjrkI?si=sJaFyI7dSFb5V9ah"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-        <div class="video-description">
-          <img src="./img/logo.png" alt="logo canal alura" />
-          <h3>Como o PHP funciona? - Conheça o OPcache</h3>
-          <div class="acoes-video">
-            <a href="./pages/send-video.html">Editar</a>
-            <a href="./pages/send-video.html">Excluir</a>
-          </div>
-        </div>
-      </li>
-      <li class="videos__item">
-        <iframe
-          width="100%"
-          height="75%"
-          src="https://www.youtube.com/embed/nRcBvB0F_pE?si=zG9fgc1XIhYF9o_i"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-        <div class="video-description">
-          <img src="./img/logo.png" alt="logo canal alura" />
-          <h3>Aprendendo PHP do ZERO (material para iniciantes)</h3>
-          <div class="acoes-video">
-            <a href="./pages/send-video.html">Editar</a>
-            <a href="./pages/send-video.html">Excluir</a>
-          </div>
-        </div>
-      </li>
+      <?php endforeach ?>
     </ul>
   </body>
 </html>
