@@ -19,14 +19,13 @@
   <body>
     <header>
       <nav class="header">
-        <a href="/">
+        <a class="logo" href="/">
         <h1>PHPlay</h1> 
         </a>
 
         <div class="header__icons">
         <a href="/new-video" class="header__videos">Enviar vídeo</a>
 
-          <a href="./pages/login.php" class="header__sair">Sair</a>
         </div>
       </nav>
     </header>

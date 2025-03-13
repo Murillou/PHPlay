@@ -17,7 +17,7 @@ require_once __DIR__ . '/header-html.php';
             allowfullscreen
         ></iframe>
         <div class="video-description">
-            <img src="./img/logo.png" alt="logo canal alura" />
+            <img style='display: hidden' src="./img/logo.png" alt="logo canal alura" />
             <h3><?= htmlspecialchars($video->title, ENT_QUOTES, 'UTF-8') ?></h3>
             <div class="acoes-video">
                 <a href="/update-video?id=<?= $video->id; ?>">Editar</a>

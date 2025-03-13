@@ -1,11 +1,11 @@
 *,
 *::before,
 *::after {
-  --azul-escuro: #154580;
-  --azul-medio: #3970be;
-  --azul-claro: #e5f1ff;
-  --cinza-texto: #444444;
-  --cinza-claro: #ececec;
+  --azul-escuro: #388e3c;
+  --azul-medio: #2c6e2f;
+  --azul-claro: #1e1e1e;
+  --cinza-texto: #ffffff;
+  --cinza-claro: #333333;
   box-sizing: border-box;
 }
 
@@ -17,25 +17,20 @@ body {
   height: 100vh;
   overflow: auto;
   font-size: 14px;
-  color: white;
+  color: var(--cinza-texto);
   box-sizing: border-box;
   text-align: center;
-
-  & h1 {
-    font-size: 30px;
-    cursor: pointer;
-  }
 }
 
 .header {
-  background-color: white;
+  background-color: var(--cinza-claro);
   position: fixed;
   top: 0;
   height: 80px;
   width: 100%;
   padding: 0 25px;
   z-index: 2;
-  color: #000;
+  color: var(--cinza-texto);
 }
 
 .logo {
@@ -43,6 +38,7 @@ body {
   background-repeat: no-repeat;
   padding: 15px 65px;
   cursor: pointer;
+  font-size: 32px;
 }
 
 .header__videos {
