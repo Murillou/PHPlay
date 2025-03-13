@@ -1,13 +1,13 @@
 <?php
 
-  require '../config/connection-bd.php';
+use Phplay\Mvc\Repository\VideoRepository;
+
+require '../config/connection-bd.php';
 
 $id = $_GET['id'];
-$sqlQuery = 'DELETE FROM videos WHERE id = :id';
-$stmt = $pdo->prepare($sqlQuery);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$repositoryVideo = new VideoRepository($pdo);
 
-if ($stmt->execute() === false) {
+if ($repositoryVideo->deleteVideo($id) === false) {
   header('Location: /?sucesso=0');
   exit();
 } else {

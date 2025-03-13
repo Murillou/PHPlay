@@ -1,9 +1,12 @@
 <?php
 
+use Phplay\Mvc\Model\Video;
+use Phplay\Mvc\Repository\VideoRepository;
+
 require '../config/connection-bd.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-if ($id === false) {
+if ($id === false || $id === null) {
     header('Location: /?sucesso=0');
     exit();
 }
@@ -19,15 +22,12 @@ if ($title === false) {
     exit();
 }
 
+$video = new Video($url, $title);
+$video->setId($id);
 
-$sqlQuery = 'UPDATE videos SET url = :url, title = :title WHERE id = :id';
-$stmt = $pdo->prepare($sqlQuery);
-$stmt->bindValue(':url', $url, PDO::PARAM_STR);
-$stmt->bindValue(':title', $title, PDO::PARAM_STR);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$repositoryVideo = new VideoRepository($pdo);
 
-
-if ($stmt->execute() === false) {
+if ($repositoryVideo->updateVideo($video) === false) {
   header('Location: /?sucesso=0');
 } else {
   header('Location: /?sucesso=1');
