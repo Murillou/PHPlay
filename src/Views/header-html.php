@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="./css/form-style.css" />
     <link rel="stylesheet" href="./css/flexbox.css" />
     <title>PHPlay</title>
-    <link rel="shortcut icon" href="./img/icon-aba.png" type="image/x-icon" />
-  </head>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+    </head>
 
   <body>
     <header>
