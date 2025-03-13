@@ -78,15 +78,33 @@ class VideoRepository
         try{
           $stmt = $this->pdo->query('SELECT * FROM videos;');
           $dataVideos = $stmt->fetchAll();
-  
-          return array_map(function (array $videoData) {
-            $video = new Video($videoData['url'], $videoData['title']);
-            $video->setId($videoData['id']);
 
-            return $video;
-          },$dataVideos);
+          return array_map($this->hydrateVideo(...), $dataVideos);
+
         } catch (PDOException $error) {
           throw new RuntimeException('Erro ao listar vídeos: ' . $error->getMessage());
         }
       }
+
+      public function find(int $id)
+      {
+          try{
+            $stmt = $this->pdo->prepare('SELECT * FROM videos WHERE id = :id;');
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $this->hydrateVideo($stmt->fetch());
+          } catch (PDOException $error) {
+              throw new RuntimeException('Erro ao encontrar vídeo: ' . $error->getMessage());
+          }
+      }
+
+      private function hydrateVideo(array $videoData): Video
+      {
+        $video = new Video($videoData['url'], $videoData['title']);
+        $video->setId($videoData['id']);
+
+        return $video;
+      }
+
 }
