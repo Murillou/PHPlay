@@ -43,4 +43,8 @@ php -S localhost:8000 -t public
 
 Acesse o projeto via [http://localhost:8000](http://localhost:8000)
 
+## 
+
+Feito com ❤️ por [Murillo Vinícius](https://github.com/Murillou).
+
 
