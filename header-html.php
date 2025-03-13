@@ -24,9 +24,8 @@
         </a>
 
         <div class="header__icons">
-          <a href="/forms.php" class="header__videos"
-            >Enviar vídeo</a
-          >
+        <a href="/new-video" class="header__videos">Enviar vídeo</a>
+
           <a href="./pages/login.php" class="header__sair">Sair</a>
         </div>
       </nav>

@@ -1,5 +1,5 @@
 <?php 
-    require './config/connection-bd.php';
+    require '../config/connection-bd.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $video = [
@@ -13,15 +13,11 @@ if ($id !== false && $id !== null) {
     $stmt->execute();
     $video = $stmt->fetch();
 } 
-
-
-
 ?>
 <?php require_once 'header-html.php'; ?>
 
     <main class="container">
         <form class="container__formulario"
-        action="<?= $id ? "/scripts/update-video.php?id=$id" : '/scripts/new-video.php'; ?>"
         method="post">
             <h2 class="formulario__titulo">Envie um vídeo!</h3>
                 <div class="formulario__campo">
