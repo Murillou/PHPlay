@@ -11,6 +11,12 @@ class VideoListController implements Controller
 
     public function processRequest(): void
     {
+        session_start();
+        if (!array_key_exists('logado', $_SESSION)){
+            header('Location: /login');
+            return;
+        }
+
         $dataVideos = $this->videoRepository->getAllVideos();
         require_once __DIR__ . "/../../Views/video-list.php";
     }
