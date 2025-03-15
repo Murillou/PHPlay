@@ -28,8 +28,6 @@ class AuthController implements Controller
           exit();
       }
 
-      session_start();
-      $_SESSION['logado'] = true;
       header('Location: /');
     }
 }

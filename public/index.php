@@ -20,6 +20,13 @@ require __DIR__ . '/../config/connection-bd.php';
 $videoRepository = new VideoRepository($pdo);
 $userRepository = new UsersRepository($pdo);
 
+session_start();
+$isLoginRoute = $_SERVER['REQUEST_URI'] === '/login';
+if (empty($_SESSION['logado']) && !$isLoginRoute) {
+    header('Location: /login');
+    exit;
+}
+
 if (!array_key_exists('REQUEST_URI', $_SERVER) || 
 strpos($_SERVER['REQUEST_URI'], '/?') === 0 || $_SERVER['REQUEST_URI'] === '/') {
     $controller = new VideoListController($videoRepository);
