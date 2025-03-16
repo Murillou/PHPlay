@@ -25,7 +25,7 @@
 
         <div class="header__icons">
         <a href="/new-video" class="header__videos">Enviar vídeo</a>
-        <a href="/login" class="cabecalho__sair">Sair</a>
+        <a href="/logout" class="cabecalho__sair">Sair</a>
         </div>
       </nav>
     </header>
