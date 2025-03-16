@@ -34,6 +34,15 @@ class UpdateVideoController implements Controller
       $video = new Video($url, $title);
       $video->setId($id);
 
+      if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            move_uploaded_file(
+                $_FILES['image']['tmp_name'],
+                __DIR__ . '/../../public/img/upload/' . $_FILES['image']['name']
+            );
+            $video->setFilePath($_FILES['image']['name']);
+      }
+
+
       $success = $this->videoRepository->updateVideo($video);
 
       if ($success === false) {
