@@ -27,7 +27,7 @@ class AuthController implements Controller
           header('Location: /login?sucesso=0');
           exit();
       }
-
+      $_SESSION['logado'] = true;
       header('Location: /');
     }
 }
