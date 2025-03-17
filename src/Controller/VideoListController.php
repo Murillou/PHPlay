@@ -3,6 +3,7 @@
 namespace Phplay\Mvc\Controller;
 
 use Phplay\Mvc\Repository\VideoRepository;
+
 class VideoListController implements Controller
 {
     public function __construct(private VideoRepository $videoRepository)

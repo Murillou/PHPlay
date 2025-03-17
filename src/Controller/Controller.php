@@ -4,5 +4,5 @@ namespace Phplay\Mvc\Controller;
 
 interface Controller
 {
-  public function processRequest(): void;
+    public function processRequest(): void;
 }

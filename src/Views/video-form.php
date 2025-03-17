@@ -28,4 +28,4 @@ require_once __DIR__ . '/header-html.php'; ?>
 </main>
 
 <?php
-require_once __DIR__ . '/footer-html.php'; 
+require_once __DIR__ . '/footer-html.php';

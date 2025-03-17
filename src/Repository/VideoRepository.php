@@ -9,120 +9,115 @@ use RuntimeException;
 
 class VideoRepository
 {
-      public function __construct(private PDO $pdo)
-      {
+    public function __construct(private PDO $pdo)
+    {
+    }
 
-      }
-
-      public function addVideo(Video $video): bool 
-      {
+    public function addVideo(Video $video): bool
+    {
         try {
-          $this->pdo->beginTransaction();
+            $this->pdo->beginTransaction();
 
-          $sqlQuery = 'INSERT INTO videos (url, title, image_path) VALUES (:url, :title, :image_path);';
-          $stmt = $this->pdo->prepare($sqlQuery);
-          $stmt->bindValue(':url', $video->url, PDO::PARAM_STR);
-          $stmt->bindValue(':title', $video->title, PDO::PARAM_STR);
-          $stmt->bindValue(':image_path', $video->getFilePath(), PDO::PARAM_STR);
-  
-          $result = $stmt->execute();
-  
-          $video->setId((int) $this->pdo->lastInsertId());
+            $sqlQuery = 'INSERT INTO videos (url, title, image_path) VALUES (:url, :title, :image_path);';
+            $stmt = $this->pdo->prepare($sqlQuery);
+            $stmt->bindValue(':url', $video->url, PDO::PARAM_STR);
+            $stmt->bindValue(':title', $video->title, PDO::PARAM_STR);
+            $stmt->bindValue(':image_path', $video->getFilePath(), PDO::PARAM_STR);
 
-          $this->pdo->commit();
+            $result = $stmt->execute();
 
-          return $result;
+            $video->setId((int) $this->pdo->lastInsertId());
+
+            $this->pdo->commit();
+
+            return $result;
         } catch (PDOException $error) {
-          $this->pdo->rollBack();
-          throw new RuntimeException('Erro ao adicionar vídeo: ' . $error->getMessage());
+            $this->pdo->rollBack();
+            throw new RuntimeException('Erro ao adicionar vídeo: ' . $error->getMessage());
         }
-      }
+    }
 
-      public function deleteVideo(int $id): bool {
+    public function deleteVideo(int $id): bool
+    {
         try {
             $sqlQuery = 'DELETE FROM videos WHERE id = :id';
             $stmt = $this->pdo->prepare($sqlQuery);
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            
+
             return $stmt->execute();
-
         } catch (PDOException $error) {
-          throw new RuntimeException('Erro ao deletar vídeo: ' . $error->getMessage());
+            throw new RuntimeException('Erro ao deletar vídeo: ' . $error->getMessage());
         }
-      }
+    }
 
-      public function updateVideo(Video $video): bool 
-      {
+    public function updateVideo(Video $video): bool
+    {
         try {
-          $this->pdo->beginTransaction();
+            $this->pdo->beginTransaction();
 
-          $updateImageSql = '';
-          if ($video->getFilePath() !== null) {
-              $updateImageSql = ', image_path = :image_path';
-          }
-          $sqlQuery = "UPDATE videos SET
+            $updateImageSql = '';
+            if ($video->getFilePath() !== null) {
+                $updateImageSql = ', image_path = :image_path';
+            }
+            $sqlQuery = "UPDATE videos SET
                     url = :url,
                     title = :title
                     $updateImageSql
                     WHERE id = :id;";
-          $stmt = $this->pdo->prepare($sqlQuery);
+            $stmt = $this->pdo->prepare($sqlQuery);
 
-          $stmt->bindValue(':url', $video->url, PDO::PARAM_STR);
-          $stmt->bindValue(':title', $video->title, PDO::PARAM_STR);
-          $stmt->bindValue(':id', $video->id, PDO::PARAM_INT);
+            $stmt->bindValue(':url', $video->url, PDO::PARAM_STR);
+            $stmt->bindValue(':title', $video->title, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $video->id, PDO::PARAM_INT);
 
-          if ($video->getFilePath() !== null) {
+            if ($video->getFilePath() !== null) {
                 $stmt->bindValue(':image_path', $video->getFilePath());
-              }
-          $result = $stmt->execute();
+            }
+            $result = $stmt->execute();
 
-          $this->pdo->commit();
+            $this->pdo->commit();
 
-          return $result;
-
+            return $result;
         } catch (PDOException $error) {
-          $this->pdo->rollBack();
-          throw new RuntimeException('Erro ao editar vídeo: ' . $error->getMessage());
+            $this->pdo->rollBack();
+            throw new RuntimeException('Erro ao editar vídeo: ' . $error->getMessage());
         }
-      }
+    }
 
-      public function getAllVideos(): array
-      {
-        try{
-          $stmt = $this->pdo->query('SELECT * FROM videos;');
-          $dataVideos = $stmt->fetchAll();
+    public function getAllVideos(): array
+    {
+        try {
+            $stmt = $this->pdo->query('SELECT * FROM videos;');
+            $dataVideos = $stmt->fetchAll();
 
-          return array_map($this->hydrateVideo(...), $dataVideos);
-
+            return array_map($this->hydrateVideo(...), $dataVideos);
         } catch (PDOException $error) {
-          throw new RuntimeException('Erro ao listar vídeos: ' . $error->getMessage());
+            throw new RuntimeException('Erro ao listar vídeos: ' . $error->getMessage());
         }
-      }
+    }
 
-      public function find(int $id)
-      {
-          try{
+    public function find(int $id)
+    {
+        try {
             $stmt = $this->pdo->prepare('SELECT * FROM videos WHERE id = :id;');
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             return $this->hydrateVideo($stmt->fetch());
-          } catch (PDOException $error) {
-              throw new RuntimeException('Erro ao encontrar vídeo: ' . $error->getMessage());
-          }
-      }
+        } catch (PDOException $error) {
+            throw new RuntimeException('Erro ao encontrar vídeo: ' . $error->getMessage());
+        }
+    }
 
-      private function hydrateVideo(array $videoData): Video
-      {
+    private function hydrateVideo(array $videoData): Video
+    {
         $video = new Video($videoData['url'], $videoData['title']);
         $video->setId($videoData['id']);
 
-        if ($videoData['image_path'] !== null)
-        {
-          $video->setFilePath($videoData['image_path']);
+        if ($videoData['image_path'] !== null) {
+            $video->setFilePath($videoData['image_path']);
         }
 
         return $video;
-      }
-
+    }
 }

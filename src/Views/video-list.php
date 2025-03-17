@@ -1,16 +1,16 @@
 <?php
-require_once __DIR__ . '/header-html.php'; 
+require_once __DIR__ . '/header-html.php';
 
 ?>
 
 <ul class="videos__container" alt="Vídeos PHP">
-    <?php foreach($dataVideos as $video) : ?>
+    <?php foreach ($dataVideos as $video) : ?>
     <li class="videos__item">
-        <?php if ($video->getFilePath() !== null): ?>
+        <?php if ($video->getFilePath() !== null) : ?>
         <a href="<?= $video->url; ?>">
             <img src="/img/upload/<?= $video->getFilePath(); ?>" alt="" style="width: 20rem; height: 14.5rem;"/>
         </a>
-        <?php else: ?>
+        <?php else : ?>
         <iframe
             width="100%"
             height="75%"

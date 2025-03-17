@@ -13,12 +13,11 @@ class NewJsonVideoController implements Controller
 
     public function processRequest(): void
     {
-        $request= file_get_contents('php://input');
+        $request = file_get_contents('php://input');
         $dataVideo = json_decode($request, true);
-        $video = new Video($dataVideo['url'], $dataVideo['title']);  
+        $video = new Video($dataVideo['url'], $dataVideo['title']);
         $this->videoRepository->addVideo($video);
 
         http_response_code(201);
     }
-
 }
