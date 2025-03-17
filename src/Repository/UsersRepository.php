@@ -20,13 +20,15 @@ class UsersRepository
           $stmt->bindValue(':email', $email, PDO::PARAM_STR);
           $stmt->execute();
           $userData = $stmt->fetch();
+
+          $correctPassword = password_verify($password, $userData['password'] ?? '');
           
           if (!$userData) {
-              return null;
+            return null;
           }
 
-          if (!password_verify($password, $userData['password'])) {
-              return null; 
+          if (!$correctPassword) {
+            return null;
           }
 
           return new Users($userData['id'], $userData['email'], $userData['password']);
