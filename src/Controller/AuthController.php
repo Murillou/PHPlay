@@ -23,8 +23,9 @@ class AuthController implements Controller
 
       $user = $this->userRepository->authenticateUser($email, $password);
 
+      
       if (!$user) {
-          header('Location: /login?sucesso=0');
+          header('Location: /login');
           exit();
       }
       $_SESSION['logado'] = true;
