@@ -15,6 +15,7 @@ use Phplay\Mvc\Controller\{
 use Phplay\Mvc\Repository\UsersRepository;
 use Phplay\Mvc\Repository\VideoRepository;
 
+
 require_once __DIR__ . "/../vendor/autoload.php";
 
 require __DIR__ . '/../config/connection-bd.php';
@@ -22,10 +23,17 @@ $videoRepository = new VideoRepository($pdo);
 $userRepository = new UsersRepository($pdo);
 
 session_start();
-$isLoginRoute = $_SERVER['REQUEST_URI'] === '/login';
-if (empty($_SESSION['logado']) && !$isLoginRoute) {
-    header('Location: /login');
-    exit();
+if (isset($_SESSION['logado'])) {
+    $originInfo = $_SESSION['logado'];
+    unset($_SESSION['logado']);
+    session_regenerate_id();
+    $_SESSION['logado'] = $originInfo;
+} else {
+    $isLoginRoute = $_SERVER['REQUEST_URI'] === '/login';
+    if (!$isLoginRoute) {
+        header('location: /login');
+        exit();
+    }
 }
 
 if (!array_key_exists('REQUEST_URI', $_SERVER) || 
