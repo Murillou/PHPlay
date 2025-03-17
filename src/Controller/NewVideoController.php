@@ -2,6 +2,7 @@
 
 namespace Phplay\Mvc\Controller;
 
+use finfo;
 use Phplay\Mvc\Model\Video;
 use Phplay\Mvc\Repository\VideoRepository;
 
@@ -28,14 +29,18 @@ class NewVideoController implements Controller
 
       $video = new Video($url, $title);
       if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {          
-          move_uploaded_file(
-                $_FILES['image']['tmp_name'],
-                __DIR__ . '/../../public/img/upload/' . $_FILES['image']['name']
-            );
-            $video->setFilePath($_FILES['image']['name']);
-      }  else {
-        die('Erro ao mover arquivo');
-      }
+        $safeFileName = uniqid('upload_') . '_' . pathinfo($_FILES['image']['name'], PATHINFO_BASENAME);
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->file($_FILES['image']['tmp_name']);
+
+        if (str_starts_with($mimeType, 'image/')) {
+            move_uploaded_file(
+                  $_FILES['image']['tmp_name'],
+                  __DIR__ . '/../../public/img/upload/' . $safeFileName 
+              );
+              $video->setFilePath($safeFileName);
+        }
+      } 
 
       $success = $this->videoRepository->addVideo($video);
       if ( $success === false) {
