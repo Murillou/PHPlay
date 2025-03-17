@@ -8,7 +8,7 @@ require_once __DIR__ . '/header-html.php';
     <li class="videos__item">
         <?php if ($video->getFilePath() !== null): ?>
         <a href="<?= $video->url; ?>">
-            <img src="/img/upload/<?= $video->getFilePath(); ?>" alt="" style="width: 100%;"/>
+            <img src="/img/upload/<?= $video->getFilePath(); ?>" alt="" style="width: 20rem; height: 14.5rem;"/>
         </a>
         <?php else: ?>
         <iframe
