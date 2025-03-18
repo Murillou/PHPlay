@@ -4,7 +4,7 @@ namespace Phplay\Mvc\Controller;
 
 use Phplay\Mvc\Repository\VideoRepository;
 
-class VideoFormController implements Controller
+class VideoFormController extends ControllerWithHtml implements Controller
 {
     public function __construct(private VideoRepository $repository)
     {
@@ -18,7 +18,8 @@ class VideoFormController implements Controller
         if ($id !== false && $id !== null) {
             $video = $this->repository->find($id);
         }
-
-        require_once __DIR__ . '/../Views/video-form.php';
-    }
+      echo $this->renderTemplate('video-form', [
+        'video' => $video
+      ]);
+  }
 }
