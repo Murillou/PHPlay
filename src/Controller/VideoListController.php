@@ -3,7 +3,7 @@
 namespace Phplay\Mvc\Controller;
 
 use Phplay\Mvc\Repository\VideoRepository;
-class VideoListController implements Controller
+class VideoListController extends ControllerWithHtml implements Controller
 {
     public function __construct(private VideoRepository $videoRepository)
     {
@@ -12,6 +12,9 @@ class VideoListController implements Controller
     public function processRequest(): void
     {
         $dataVideos = $this->videoRepository->getAllVideos();
-        require_once __DIR__ . "/../../Views/video-list.php";
+        $this->renderTemplate(
+            'video-list',
+            ['dataVideos' => $dataVideos]
+        );
     }
 }
